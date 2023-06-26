@@ -49,7 +49,7 @@ You might want to use a separate file that contains functions for performing spe
 • Choosing to add a role prompts user to enter the name, salary, and department for the role and that role is added to the database
 • Choosing to add an employee prompts user to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 • Choosing 'update an employee role' prompts user to select an employee to update and their new role and this information is updated in the database 
-
+• To run the app, simply type `node index` in your terminal.
 ## Bonus
 
 Try to add some additional functionality to your application, such as the ability to do the following:

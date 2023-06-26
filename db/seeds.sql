@@ -24,7 +24,7 @@ VALUES
     (first_name, last_name, role_id, manager_id)
 VALUES
     ("Kevin", "Lewis", 1, NULL),
-    ("Charlie", "Kelly", 2, 1),
+    ("Ronald", "McDonald", 2, 1),
     ("Titus", "Andromedon", 3, 1),
     ("Andrew", "Ryan", 4, NULL),
     ("Sansa", "Stark", 5, 4),
