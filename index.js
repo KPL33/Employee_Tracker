@@ -1,6 +1,65 @@
-const mysql = require ('mysql2');
-const inquirer = require ('inquirer');
-const connections = require("");
+const inquirer = require('inquirer');
+const db = require('./db');
+
+
+
+
+
+
+
+
+
+async function mainMenu() {
+    const { choice } = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'choice',
+            message: 'What would you like to do?',
+            choices: ["View All Employees", "Update Employee Role", "View All Roles", "Add Roles", "View All Departments", "Add Department", "Quit"]
+        }, //Remove this comma?
+    ]);
+    switch (choice) {
+        case "View All Departments":
+            return viewAllDept();
+        case "View All Roles":
+            return viewAllRoles();
+        case "View All Employees":
+            return viewAllEmp();
+    }
+
+};
+
+async function viewAllEmp() {
+    const employees = await db.viewAllEmp();
+    console.table(employees);
+    mainMenu();
+
+}
+
+async function viewAllDept() {
+    const departments = await db.viewAllDept();
+    console.table(departments);
+    mainMenu();
+};
+
+async function viewAllRoles() {
+    const roles = await db.viewAllRoles();
+    console.table(roles);
+    mainMenu();
+};
+
+
+
+mainMenu();
+
+
+
+
+
+
+
+
+
 
 
 //Here, we declare an array of 'questions' that will prompt the user for — and store — their 'input'..
@@ -29,17 +88,7 @@ const questions = [
     },
     {
         type: 'input',
-        name: 'logoColor',
-        message: 'Please enter a hexadecimal value for your logo-color, beginning with the # sign. If you are unfamilir with choosing colors based on hexidecimal value, please visit https://htmlcolorcodes.com/color-picker/ for help: . Or, you may choose colors with basic names (red, green, blue, etc.).'
-    },
-    {
-        type: 'input',
-        name: 'logoText',
-        message: 'What text would you like to appear on your logo (please limit to 1 to 3 characters)?'
-    },
-    {
-        type: 'input',
-        name: 'textColor',
-        message: 'Please enter a color for your text-color.'
+        name: 'DeptName',
+        message: 'What is the name of the Department?'
     }
 ];
