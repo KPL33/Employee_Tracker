@@ -28,7 +28,7 @@ VALUES
     ("Titus", "Andromedon", 3, 1),
     ("Andrew", "Ryan", 4, NULL),
     ("Sansa", "Stark", 5, 4),
-    ("Ali", "Wong", 6, 4),
+    ("Amy", "Lau", 6, 4),
     ("Ben", "Kenobi", 7, NULL),
     ("Walter", "White", 8, 7),
     ("Tanya", "McQuoid", 9, 7);
