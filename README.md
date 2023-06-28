@@ -25,7 +25,7 @@ This simple Application allows businesses to review and edit a database of their
 </br>
 
 ## Application Demo Video
-• Here is a link to a video demonstration of the app in action:
+https://github.com/KPL33/Employee_Tracker/blob/main/Assets/Kevin_Lewis_Employee_Tracker_demo.webm
 
 </br>
 
