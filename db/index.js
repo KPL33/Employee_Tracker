@@ -19,14 +19,48 @@ class DB {
 
     }
 
+    async addEmployee(firstName, lastName, roleId, managerId, departmentId, title) {
+        try {
+            // Fetch the salary based on the roleId
+            const [role] = await this.connection.query(
+                `
+            SELECT salary
+            FROM role
+            WHERE id = ?
+            `,
+                [roleId]
+            );
+
+            // Check if a role is found
+            if (role.length === 0) {
+                throw new Error(`Role with ID ${roleId} does not exist.`);
+            }
+
+            // Extract the salary from the fetched role
+            const { salary } = role[0];
+
+            // Insert the employee with the retrieved salary
+            return this.connection.query(
+                `
+            INSERT INTO employee (first_name, last_name, role_id, manager_id, department_id, salary, title)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            `,
+                [firstName, lastName, roleId, managerId, departmentId, salary, title]
+            );
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
     viewAllRoles() {
         return this.connection.query(
             `
             SELECT
                 role.id,
                 role.title,
-                role.salary,
-                department.name
+                department.name AS department,
+                role.salary
             FROM
                 role
             LEFT JOIN
@@ -43,26 +77,63 @@ class DB {
                 employee.first_name,
                 employee.last_name,
                 role.title,
-                employee.manager_id
+                department.name AS department,
+                role.salary,
+                IFNULL(CONCAT(manager.first_name, ' ', manager.last_name), 'N/A; Is Dept. Lead')  AS "manager"
             FROM
                 employee
             LEFT JOIN
                 role ON employee.role_id = role.id
+            LEFT JOIN
+                department ON role.department_id = department.id
+            LEFT JOIN
+                employee AS manager ON employee.manager_id = manager.id
 
             `
         )
     }
 
+    async addDept(departmentName) {
+        return this.connection.query(
+            `
+            INSERT INTO department (name)
+            VALUES (?)
+            `,
+            [departmentName]
+        );
+    }
 
+    async addRole(roleName, salary, departmentId) {
+        return this.connection.query(
+            `
+            INSERT INTO role (title, salary, department_id)
+            VALUES (?, ?, ?)
+            `,
+            [roleName, salary, departmentId]
+        );
+    }
 
+    async updateEmployeeRole(employeeId, roleId) {
+        return this.connection.query(
+            `
+          UPDATE employee
+          SET role_id = ?
+          WHERE id = ?
+          `,
+            [roleId, employeeId]
+        );
+    }
 
-
-
-
-
-
-
-
+    async updateEmployeeManager(employeeId, managerId) {
+        return this.connection.query(
+            `
+          UPDATE employee
+          SET manager_id = ?
+          WHERE id = ?
+          `,
+            [managerId, employeeId]
+        );
+    }
 }
 
 module.exports = new DB(connection);
