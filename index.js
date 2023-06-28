@@ -133,7 +133,6 @@ async function promptAddDept() {
 }
 
 async function promptAddRole() {
-    // Fetch departments from the database
     const departments = await db.viewAllDept();
 
     const departmentChoices = departments.map((department) => ({
@@ -153,7 +152,7 @@ async function promptAddRole() {
             message: "What is the salary of the role?",
         },
         {
-            type: 'list', // Change the input type to list
+            type: 'list',
             name: 'departmentId',
             message: "Which department does the role belong to?",
             choices: departmentChoices,
@@ -166,12 +165,3 @@ async function promptAddRole() {
 }
 
 mainMenu();
-
-// Within "Add Department", need to add another question "What is the name of the department?" that allows user to type dept. name.
-//Within "Update employee role", need to add another question "What is the name of the new role?" that allows user to type dept. name.
-
-//Within "Add role", need to add other questions: "What is the name of the role?",  "What is the salary of the role", "Which department does the role belong to?". This last one should give a list of your available departments, with "(Use arrow keys)" text.
-
-//Add employee should have sub-questions "What is the employee's first name?", "What is the employee's last name?", "What is the employee's role?"(list of roles, with "user arrows" message), "Who is the employee's manager?" (list of dept. leads, arrow message).
-
-//Update employee should let you select the employee (full names in a list, arrow message), then ask "Which role do you want to assign the selected employee?" (list roles, arrow message), that allows user to type dept. name.
